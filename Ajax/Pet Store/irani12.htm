@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Load Branch Data</title>
+<script src="jquery-1.11.1.js"></script>
+<script>
+
+ $(document).ready(function(){  
+      function fetch_data()  
+      {  
+           $.ajax({  
+                url:"irani12.php",  
+                method:"POST",  
+                success:function(data){  
+                     $('#live_data').html(data);  
+                }  
+           });  
+      }  
+      fetch_data();  
+
+    $( window ).load(function() {
+        $.ajax({url: "irani12a.php", success: function(result){
+            $("#div2").html(result);
+        }});
+    });
+    $( "#div2" ).on( "change", "select", function() {
+        $.get("irani12b.php", {branchid: this.value}, function(result){
+            $("#tableBody").html(result);
+        })
+      });
+
+    $("#add").click(function() {
+var bid = prompt('Enter Branch ID');
+var sid = prompt('Enter Sale ID');
+        $.get("irani12c.php", 
+         {bid:bid,sid:sid 
+                         },
+            function(result){
+                  $("#targetDiv").html(result);
+            });
+    });
+
+
+  });  
+</script>
+</head>
+<body>
+<marquee bgcolor="pink"> Wait for few minutes till the page loads! </marquee>
+<br/>
+<div id="ptg"></div>
+<h3 align="left">Branch Data</h3>
+ <div id="live_data"></div>       
+<div id="div2"></div>
+<TABLE><THEAD>
+<TH>SMID</TH><TH>BRANCHID</TH><TH>SALEID</TH>
+<THEAD>
+<TBODY ID="tableBody"><TBODY>
+</TABLE>
+ <br/>
+<br/>
+<br/>
+<br/>
+<br/>     
+<p align="center">Click on the button to add into SALEMADE table:<input type="button" value="Add" id="add"></p>
+<div id="targetDiv" ></div>
+
+</body>
+</html>
+ 
